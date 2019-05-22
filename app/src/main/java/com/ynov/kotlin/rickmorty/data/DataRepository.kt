@@ -4,5 +4,10 @@ import com.ynov.kotlin.rickmorty.data.entity.models.Character
 
 class DataRepository(private val apiManager: ApiManager) {
     fun retrieveCharacters(): Single<List<Character>> = apiManager.retrieveCharacters().map{
-        it.map{character -> Character(character.id, character.name, character.image) }
-    }}
+        it.map{character -> character.toModel() }
+    }
+
+    fun retrieveCharacter(id: Long): Single<Character> = apiManager.retrieveCharacter(id).map {
+        it.toModel()
+    }
+}

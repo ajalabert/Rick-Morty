@@ -1,5 +1,7 @@
 package com.ynov.kotlin.rickmorty.data.entity.remote
 
+import com.ynov.kotlin.rickmorty.data.entity.models.Character
+
 data class Character (
     val id: Long,
     val name: String,
@@ -14,3 +16,6 @@ data class Character (
     val url: String,
     val created: String
 )
+{
+    fun toModel() : Character = Character(this.id, this.name, this.image)
+}
