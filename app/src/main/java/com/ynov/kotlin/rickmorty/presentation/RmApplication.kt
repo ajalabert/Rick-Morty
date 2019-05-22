@@ -2,6 +2,7 @@ package com.ynov.kotlin.rickmorty.presentation
 
 import android.app.Application
 import com.ynov.kotlin.rickmorty.data.ApiManager
+import com.ynov.kotlin.rickmorty.data.CacheManager
 import com.ynov.kotlin.rickmorty.data.DataRepository
 
 
@@ -21,6 +22,7 @@ class RmApplication : Application() {
 
     private fun initInjection() {
         var apiManager = ApiManager()
-        dataRepository = DataRepository(apiManager)
+        var cacheManager = CacheManager()
+        dataRepository = DataRepository(apiManager, cacheManager)
     }
 }

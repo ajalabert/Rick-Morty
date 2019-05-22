@@ -11,7 +11,7 @@ import retrofit2.http.Path
 
 private const val API_BASE_URL = "https://rickandmortyapi.com/"
 
-class ApiManager {
+class ApiManager : IManager {
 
     private val service: ApiService
 
@@ -23,12 +23,12 @@ class ApiManager {
         fun retrieveCharacter(@Path("id") id: Long): Single<Character>
     }
 
-    fun retrieveCharacters(): Single<List<Character>> =
+    override fun retrieveCharacters(): Single<List<Character>> =
         service.retrieveCharacters().map{
             it.results
         }
 
-    fun retrieveCharacter(id: Long): Single<Character> =
+    override fun retrieveCharacter(id: Long): Single<Character> =
         service.retrieveCharacter(id)
 
     init {
