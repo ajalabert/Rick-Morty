@@ -12,6 +12,7 @@ import io.reactivex.schedulers.Schedulers
 class CharacterListViewModel : ViewModel() {
 
     var charactersLiveData: MutableLiveData<List<Character>> = MutableLiveData()
+    var errorLiveData: MutableLiveData<Throwable> = MutableLiveData()
 
     init {
         retrieveCharacters()
@@ -26,7 +27,8 @@ class CharacterListViewModel : ViewModel() {
                     charactersLiveData.postValue(it)
                 },
                 onError = {
-                    Log.e("ERROR", "", it);
+                    Log.e("ERROR", "", it)
+                    errorLiveData.postValue(it)
                 }
             )
     }

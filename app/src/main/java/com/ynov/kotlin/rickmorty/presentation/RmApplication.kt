@@ -4,6 +4,7 @@ import android.app.Application
 import com.ynov.kotlin.rickmorty.data.ApiManager
 import com.ynov.kotlin.rickmorty.data.DataRepository
 
+
 class RmApplication : Application() {
     companion object {
         lateinit var app: RmApplication

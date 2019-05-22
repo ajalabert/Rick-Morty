@@ -8,5 +8,9 @@
             android:id="@+id/view_character_list_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+    <ImageView
+            android:id="@+id/view_character_list_item_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
