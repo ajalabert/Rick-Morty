@@ -35,7 +35,8 @@ class EpisodeListAdapter : RecyclerView.Adapter<EpisodeListAdapter.ViewHolder>()
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(episode: Episode) {
-            itemView.view_episode_list_item_name.text = "${episode.episode} - ${episode.name}"
+            itemView.view_episode_list_item_name.text = episode.name
+            itemView.view_episode_list_item_episode.text = episode.episode
         }
     }
 }

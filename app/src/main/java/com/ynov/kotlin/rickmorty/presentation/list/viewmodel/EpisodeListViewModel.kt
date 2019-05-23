@@ -18,7 +18,7 @@ class EpisodeListViewModel : ViewModel() {
 
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
 
-    fun retrieveCharacters(page: Int){
+    fun retrieveEpisodes(page: Int){
         compositeDisposable.add(
         RmApplication.app.dataRepository.retrieveEpisodes(page)
             .subscribeOn(Schedulers.io())

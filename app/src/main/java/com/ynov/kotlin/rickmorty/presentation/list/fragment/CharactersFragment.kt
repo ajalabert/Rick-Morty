@@ -14,12 +14,10 @@ import com.ynov.kotlin.rickmorty.extension.showSnackBar
 import com.ynov.kotlin.rickmorty.presentation.DetailActivity
 import com.ynov.kotlin.rickmorty.presentation.list.viewmodel.CharacterListViewModel
 import com.ynov.kotlin.rickmorty.presentation.list.adapter.CharacterListAdapter
+import com.ynov.kotlin.rickmorty.presentation.list.listener.EndlessRecyclerViewScrollListener
 import kotlinx.android.synthetic.main.fragment_list.*
 
 class CharactersFragment : Fragment(){
-
-    private var loading = false
-    private var pageNumber = 1
 
     private lateinit var characterListAdapter: CharacterListAdapter
     private lateinit var viewModel: CharacterListViewModel
@@ -31,23 +29,18 @@ class CharactersFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val linearLayout = LinearLayoutManager(context)
+
         characterListAdapter = CharacterListAdapter()
-        fragment_list_recyclerview.layoutManager = LinearLayoutManager(context)
+        fragment_list_recyclerview.layoutManager = linearLayout
         fragment_list_recyclerview.adapter = characterListAdapter
 
-        fragment_list_recyclerview.addOnScrollListener(object: RecyclerView.OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
+        val scrollListener = EndlessRecyclerViewScrollListener(linearLayout)
+        scrollListener.onLoadMore = { pageNumber: Int, _: Int, _: RecyclerView ->
+            viewModel.retrieveCharacters(pageNumber)
+        }
 
-                if(!loading && linearLayoutManager!!.itemCount <= linearLayoutManager.findLastVisibleItemPosition() + 2){
-                    loading = true
-                    pageNumber++
-                    viewModel.retrieveCharacters(pageNumber)
-                    loading = false
-                }
-            }
-        })
+        fragment_list_recyclerview.addOnScrollListener(scrollListener)
 
         characterListAdapter.onItemClick = {
             startActivity(context?.let { context -> DetailActivity.newIntent(context, it.id) })
@@ -63,6 +56,6 @@ class CharactersFragment : Fragment(){
             getView()?.showSnackBar(it.message.toString())
         })
 
-        viewModel.retrieveCharacters(pageNumber)
+        viewModel.retrieveCharacters(1)
     }
 }

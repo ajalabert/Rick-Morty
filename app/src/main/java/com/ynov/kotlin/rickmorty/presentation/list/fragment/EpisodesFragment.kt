@@ -13,12 +13,10 @@ import com.ynov.kotlin.rickmorty.R
 import com.ynov.kotlin.rickmorty.extension.showSnackBar
 import com.ynov.kotlin.rickmorty.presentation.list.viewmodel.EpisodeListViewModel
 import com.ynov.kotlin.rickmorty.presentation.list.adapter.EpisodeListAdapter
+import com.ynov.kotlin.rickmorty.presentation.list.listener.EndlessRecyclerViewScrollListener
 import kotlinx.android.synthetic.main.fragment_list.*
 
 class EpisodesFragment : Fragment() {
-
-    private var loading = false
-    private var pageNumber = 1
 
     private lateinit var episodeListAdapter: EpisodeListAdapter
     private lateinit var viewModel: EpisodeListViewModel
@@ -30,23 +28,18 @@ class EpisodesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val linearLayout = LinearLayoutManager(context)
+
         episodeListAdapter = EpisodeListAdapter()
-        fragment_list_recyclerview.layoutManager = LinearLayoutManager(context)
+        fragment_list_recyclerview.layoutManager = linearLayout
         fragment_list_recyclerview.adapter = episodeListAdapter
 
-        fragment_list_recyclerview.addOnScrollListener(object: RecyclerView.OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
+        val scrollListener = EndlessRecyclerViewScrollListener(linearLayout)
+        scrollListener.onLoadMore = { pageNumber: Int, _: Int, _: RecyclerView ->
+            viewModel.retrieveEpisodes(pageNumber)
+        }
 
-                if(!loading && linearLayoutManager!!.itemCount <= linearLayoutManager.findLastVisibleItemPosition() + 2){
-                    loading = true
-                    pageNumber++
-                    viewModel.retrieveCharacters(pageNumber)
-                    loading = false
-                }
-            }
-        })
+        fragment_list_recyclerview.addOnScrollListener(scrollListener)
 
         viewModel = ViewModelProviders.of(this).get(EpisodeListViewModel::class.java)
 
@@ -58,6 +51,6 @@ class EpisodesFragment : Fragment() {
             getView()?.showSnackBar(it.message.toString())
         })
 
-        viewModel.retrieveCharacters(pageNumber)
+        viewModel.retrieveEpisodes(1)
     }
 }
