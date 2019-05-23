@@ -16,9 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_activity_fragment_container, ListFragment())
-            .commit()
+        loadFragment(ListFragment())
 
         val bottomNavigation = findViewById<View>(R.id.bottom_navigation) as BottomNavigationView
         bottomNavigation.setOnNavigationItemSelectedListener { item ->

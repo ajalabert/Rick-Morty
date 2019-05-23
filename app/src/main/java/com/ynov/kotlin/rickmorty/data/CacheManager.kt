@@ -7,18 +7,17 @@ import io.reactivex.Single
 class CacheManager : IManager {
 
     private var episodes: MutableList<Episode> = mutableListOf()
-    private var characters: MutableList<Character> = mutableListOf()
+    private var characters: HashMap<Int, MutableList<Character>> = hashMapOf()
     private var character: HashMap<Long, Character> = hashMapOf()
 
-    override fun retrieveCharacters(): Single<List<Character>> = Single.just(this.characters)
+    override fun retrieveCharacters(page: Int): Single<List<Character>> = Single.just(this.characters[page])
 
     override fun retrieveCharacter(id: Long): Single<Character> = Single.just(character[id])
 
     override fun retrieveEpisodes(): Single<List<Episode>> = Single.just(this.episodes)
 
-    fun saveInCache(characters: List<Character>){
-        this.characters.clear()
-        this.characters.addAll(characters)
+    fun saveInCache(characters: List<Character>, page: Int){
+        this.characters[page]?.addAll(characters)
     }
 
     fun saveInCache(character: Character){
@@ -30,7 +29,7 @@ class CacheManager : IManager {
         this.episodes.addAll(episodes)
     }
 
-    fun isCharactersInCache() : Boolean = this.characters.isNotEmpty()
+    fun isCharactersInCache(page: Int) : Boolean = this.characters.containsKey(page)
 
     fun isCharacterInCache(id: Long) : Boolean = this.character.containsKey(id)
 

@@ -14,12 +14,8 @@ class CharacterListViewModel : ViewModel() {
     var charactersLiveData: MutableLiveData<List<Character>> = MutableLiveData()
     var errorLiveData: MutableLiveData<Throwable> = MutableLiveData()
 
-    init {
-        retrieveCharacters()
-    }
-
-    private fun retrieveCharacters(){
-        RmApplication.app.dataRepository.retrieveCharacters()
+    fun retrieveCharacters(page: Int){
+        RmApplication.app.dataRepository.retrieveCharacters(page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(

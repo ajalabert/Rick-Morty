@@ -19,12 +19,12 @@ class DataRepository(private val apiManager: ApiManager, private val cacheManage
         episodes.map { it.map { episode -> episode.toModel() } }
     }
 
-    override fun retrieveCharacters(): Single<List<CharacterModel>> = Single.defer {
-        val characters: Single<List<Character>> = if(cacheManager.isCharactersInCache()){
-            cacheManager.retrieveCharacters()
+    override fun retrieveCharacters(page: Int): Single<List<CharacterModel>> = Single.defer {
+        val characters: Single<List<Character>> = if(cacheManager.isCharactersInCache(page)){
+            cacheManager.retrieveCharacters(page)
         } else {
-            apiManager.retrieveCharacters().doAfterSuccess {
-                cacheManager.saveInCache(it)
+            apiManager.retrieveCharacters(page).doAfterSuccess {
+                cacheManager.saveInCache(it, page)
             }
         }
         characters.map { it.map { character -> character.toModel() } }

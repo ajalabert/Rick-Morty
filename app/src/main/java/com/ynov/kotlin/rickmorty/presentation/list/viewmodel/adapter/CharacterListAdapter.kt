@@ -9,7 +9,7 @@ import com.ynov.kotlin.rickmorty.R
 import com.ynov.kotlin.rickmorty.data.entity.models.Character
 import kotlinx.android.synthetic.main.view_character_list_item.view.*
 
-class CharacterListAdapter : RecyclerView.Adapter<CharacterListAdapter.ViewHolder>(){
+class CharacterListAdapter : RecyclerView.Adapter<CharacterListAdapter.ViewHolder>() {
 
     private var characters: MutableList<Character> = mutableListOf()
     var onItemClick: ((Character) -> Unit)? = null
@@ -28,7 +28,6 @@ class CharacterListAdapter : RecyclerView.Adapter<CharacterListAdapter.ViewHolde
     }
 
     fun updateList(characters: List<Character>){
-        this.characters.clear()
         this.characters.addAll(characters)
         notifyDataSetChanged()
     }
