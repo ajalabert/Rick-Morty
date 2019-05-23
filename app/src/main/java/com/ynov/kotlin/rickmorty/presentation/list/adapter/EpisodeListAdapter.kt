@@ -1,4 +1,4 @@
-package com.ynov.kotlin.rickmorty.presentation.list.viewmodel.adapter
+package com.ynov.kotlin.rickmorty.presentation.list.adapter
 
 import android.view.LayoutInflater
 import android.view.View

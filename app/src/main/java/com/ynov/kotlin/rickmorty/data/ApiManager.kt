@@ -25,7 +25,7 @@ class ApiManager : IManager {
         fun retrieveCharacters(@Query("page") page: Int): Single<CharactersResult>
 
         @GET("api/character/{id}")
-        fun retrieveCharacter(@Path("id") id: Long): Single<Character>
+        fun retrieveCharacter(@Path("id") id: Int): Single<Character>
 
         @GET("api/episode")
         fun retrieveEpisodes(@Query("page") page: Int): Single<EpisodesResult>
@@ -33,7 +33,7 @@ class ApiManager : IManager {
 
     override fun retrieveCharacters(page: Int): Single<List<Character>> = service.retrieveCharacters(page).map{ it.results }
 
-    override fun retrieveCharacter(id: Long): Single<Character> = service.retrieveCharacter(id)
+    override fun retrieveCharacter(id: Int): Single<Character> = service.retrieveCharacter(id)
 
     override fun retrieveEpisodes(page: Int): Single<List<Episode>> = service.retrieveEpisodes(page).map{ it.results }
 

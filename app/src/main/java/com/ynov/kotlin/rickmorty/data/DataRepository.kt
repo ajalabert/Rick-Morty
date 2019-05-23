@@ -30,7 +30,7 @@ class DataRepository(private val apiManager: ApiManager, private val cacheManage
         characters.map { it.map { character -> character.toModel() } }
     }
 
-    override fun retrieveCharacter(id: Long): Single<CharacterModel> = Single.defer {
+    override fun retrieveCharacter(id: Int): Single<CharacterModel> = Single.defer {
         val characters: Single<Character> = if(cacheManager.isCharacterInCache(id)){
             cacheManager.retrieveCharacter(id)
         } else {

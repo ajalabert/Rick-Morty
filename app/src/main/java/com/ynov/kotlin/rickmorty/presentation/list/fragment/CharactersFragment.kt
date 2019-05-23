@@ -1,4 +1,4 @@
-package com.ynov.kotlin.rickmorty.presentation.list.viewmodel.fragment
+package com.ynov.kotlin.rickmorty.presentation.list.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,17 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ynov.kotlin.rickmorty.R
 import com.ynov.kotlin.rickmorty.extension.showSnackBar
-import com.ynov.kotlin.rickmorty.presentation.list.viewmodel.EpisodeListViewModel
-import com.ynov.kotlin.rickmorty.presentation.list.viewmodel.adapter.EpisodeListAdapter
+import com.ynov.kotlin.rickmorty.presentation.DetailActivity
+import com.ynov.kotlin.rickmorty.presentation.list.viewmodel.CharacterListViewModel
+import com.ynov.kotlin.rickmorty.presentation.list.adapter.CharacterListAdapter
 import kotlinx.android.synthetic.main.fragment_list.*
 
-class EpisodesFragment : Fragment() {
+class CharactersFragment : Fragment(){
 
     private var loading = false
     private var pageNumber = 1
 
-    private lateinit var episodeListAdapter: EpisodeListAdapter
-    private lateinit var viewModel: EpisodeListViewModel
+    private lateinit var characterListAdapter: CharacterListAdapter
+    private lateinit var viewModel: CharacterListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
@@ -30,9 +31,9 @@ class EpisodesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        episodeListAdapter = EpisodeListAdapter()
+        characterListAdapter = CharacterListAdapter()
         fragment_list_recyclerview.layoutManager = LinearLayoutManager(context)
-        fragment_list_recyclerview.adapter = episodeListAdapter
+        fragment_list_recyclerview.adapter = characterListAdapter
 
         fragment_list_recyclerview.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -48,10 +49,14 @@ class EpisodesFragment : Fragment() {
             }
         })
 
-        viewModel = ViewModelProviders.of(this).get(EpisodeListViewModel::class.java)
+        characterListAdapter.onItemClick = {
+            startActivity(context?.let { context -> DetailActivity.newIntent(context, it.id) })
+        }
 
-        viewModel.episodesLiveData.observe(this, Observer {
-            episodeListAdapter.updateList(it)
+        viewModel = ViewModelProviders.of(this).get(CharacterListViewModel::class.java)
+
+        viewModel.charactersLiveData.observe(this, Observer {
+            characterListAdapter.updateList(it)
         })
 
         viewModel.errorLiveData.observe(this, Observer {

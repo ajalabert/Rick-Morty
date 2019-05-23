@@ -8,11 +8,11 @@ class CacheManager : IManager {
 
     private var episodes: HashMap<Int, MutableList<Episode>> = hashMapOf()
     private var characters: HashMap<Int, MutableList<Character>> = hashMapOf()
-    private var character: HashMap<Long, Character> = hashMapOf()
+    private var character: HashMap<Int, Character> = hashMapOf()
 
     override fun retrieveCharacters(page: Int): Single<List<Character>> = Single.just(this.characters[page])
 
-    override fun retrieveCharacter(id: Long): Single<Character> = Single.just(character[id])
+    override fun retrieveCharacter(id: Int): Single<Character> = Single.just(character[id])
 
     override fun retrieveEpisodes(page: Int): Single<List<Episode>> = Single.just(this.episodes[page])
 
@@ -26,7 +26,7 @@ class CacheManager : IManager {
 
     fun isCharactersInCache(page: Int) : Boolean = this.characters.containsKey(page)
 
-    fun isCharacterInCache(id: Long) : Boolean = this.character.containsKey(id)
+    fun isCharacterInCache(id: Int) : Boolean = this.character.containsKey(id)
 
     fun isEpisodesInCache(page: Int) : Boolean = this.episodes.containsKey(page)
 

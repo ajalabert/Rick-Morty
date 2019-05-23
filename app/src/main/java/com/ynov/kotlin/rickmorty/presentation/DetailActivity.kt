@@ -6,15 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.ynov.kotlin.rickmorty.R
 import android.view.MenuItem
-import com.ynov.kotlin.rickmorty.presentation.detail.viewmodel.fragment.DetailFragment
-import com.ynov.kotlin.rickmorty.presentation.list.viewmodel.fragment.ListFragment
+import com.ynov.kotlin.rickmorty.presentation.detail.fragment.DetailFragment
 
 
 class DetailActivity : AppCompatActivity() {
 
    companion object {
        const val characterIdKey = "characterId"
-       fun newIntent(context: Context, id: Long): Intent =
+       fun newIntent(context: Context, id: Int): Intent =
                Intent(context, DetailActivity::class.java)
                    .putExtra(characterIdKey, id)
    }
@@ -24,7 +23,7 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        val characterId = intent.getLongExtra(characterIdKey, -1)
+        val characterId = intent.getIntExtra(characterIdKey, -1)
         supportFragmentManager.beginTransaction()
             .replace(R.id.detail_activity_fragment_container, DetailFragment(characterId))
             .commit()

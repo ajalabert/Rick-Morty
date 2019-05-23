@@ -18,7 +18,7 @@ class CharacterDetailViewModel : ViewModel() {
 
     override fun onCleared() = compositeDisposable.clear()
 
-    fun retrieveCharacters(id: Long){
+    fun retrieveCharacters(id: Int){
         compositeDisposable.add(
             RmApplication.app.dataRepository.retrieveCharacter(id)
                 .subscribeOn(Schedulers.io())

@@ -3,7 +3,7 @@ package com.ynov.kotlin.rickmorty.data.entity.remote
 import com.ynov.kotlin.rickmorty.data.entity.models.Character
 
 data class Character (
-    val id: Long,
+    val id: Int,
     val name: String,
     val status: Status,
     val species: Species,

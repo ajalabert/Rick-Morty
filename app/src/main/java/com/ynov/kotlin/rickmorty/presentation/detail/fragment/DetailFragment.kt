@@ -1,4 +1,4 @@
-package com.ynov.kotlin.rickmorty.presentation.detail.viewmodel.fragment
+package com.ynov.kotlin.rickmorty.presentation.detail.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import com.ynov.kotlin.rickmorty.R
 import com.ynov.kotlin.rickmorty.presentation.detail.viewmodel.CharacterDetailViewModel
 import kotlinx.android.synthetic.main.fragment_detail.*
 
-class DetailFragment(var characterId: Long) : Fragment() {
+class DetailFragment(var characterId: Int) : Fragment() {
     private lateinit var viewModel: CharacterDetailViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

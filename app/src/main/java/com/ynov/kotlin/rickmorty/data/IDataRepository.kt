@@ -6,6 +6,6 @@ import io.reactivex.Single
 
 interface IDataRepository {
     fun retrieveCharacters(page: Int): Single<List<Character>>
-    fun retrieveCharacter(id: Long): Single<Character>
+    fun retrieveCharacter(id: Int): Single<Character>
     fun retrieveEpisodes(page: Int): Single<List<Episode>>
 }
