@@ -13,5 +13,5 @@ data class Episode (
     val created: String
 )
 {
-    fun toModel() : Episode = Episode(this.id, this.name, this.episode, this.airDate)
+    fun toModel() : Episode = Episode(id, name, episode, airDate)
 }

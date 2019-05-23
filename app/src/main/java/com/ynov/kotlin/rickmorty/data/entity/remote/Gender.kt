@@ -1,7 +1,10 @@
 package com.ynov.kotlin.rickmorty.data.entity.remote
 
+import com.google.gson.annotations.SerializedName
+
 enum class Gender {
     Female,
     Male,
-    Unknown
+    Genderless,
+    @SerializedName("unknown") Unknown
 }

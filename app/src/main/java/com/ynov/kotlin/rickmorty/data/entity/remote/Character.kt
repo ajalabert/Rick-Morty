@@ -6,7 +6,7 @@ data class Character (
     val id: Int,
     val name: String,
     val status: Status,
-    val species: Species,
+    val species: String,
     val type: String,
     val gender: Gender,
     val origin: Location,
@@ -17,5 +17,5 @@ data class Character (
     val created: String
 )
 {
-    fun toModel() : Character = Character(this.id, this.name, this.image)
+    fun toModel() : Character = Character(id, name, image, status.toString(), species, gender.toString(), origin.name, location.name)
 }
