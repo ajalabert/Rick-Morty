@@ -28,7 +28,6 @@ class EpisodeListAdapter : RecyclerView.Adapter<EpisodeListAdapter.ViewHolder>()
     }
 
     fun updateList(episodes: List<Episode>) {
-        this.episodes.clear()
         this.episodes.addAll(episodes)
         notifyDataSetChanged()
     }

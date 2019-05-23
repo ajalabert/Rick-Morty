@@ -9,8 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.ynov.kotlin.rickmorty.R
+import com.ynov.kotlin.rickmorty.extension.showSnackBar
 import com.ynov.kotlin.rickmorty.presentation.DetailActivity
 import com.ynov.kotlin.rickmorty.presentation.list.viewmodel.CharacterListViewModel
 import com.ynov.kotlin.rickmorty.presentation.list.viewmodel.adapter.CharacterListAdapter
@@ -60,7 +60,7 @@ class ListFragment : Fragment(){
         })
 
         viewModel.errorLiveData.observe(this, Observer {
-            getView()?.let { view -> Snackbar.make(view, it.message.toString(), Snackbar.LENGTH_LONG).show() }
+            getView()?.showSnackBar(it.message.toString())
         })
 
         viewModel.retrieveCharacters(pageNumber)

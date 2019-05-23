@@ -6,7 +6,7 @@ import io.reactivex.Single
 
 class CacheManager : IManager {
 
-    private var episodes: MutableList<Episode> = mutableListOf()
+    private var episodes: HashMap<Int, MutableList<Episode>> = hashMapOf()
     private var characters: HashMap<Int, MutableList<Character>> = hashMapOf()
     private var character: HashMap<Long, Character> = hashMapOf()
 
@@ -14,25 +14,20 @@ class CacheManager : IManager {
 
     override fun retrieveCharacter(id: Long): Single<Character> = Single.just(character[id])
 
-    override fun retrieveEpisodes(): Single<List<Episode>> = Single.just(this.episodes)
+    override fun retrieveEpisodes(page: Int): Single<List<Episode>> = Single.just(this.episodes[page])
 
-    fun saveInCache(characters: List<Character>, page: Int){
-        this.characters[page]?.addAll(characters)
-    }
+    fun saveInCache(characters: List<Character>, page: Int) = this.characters[page]?.addAll(characters)
 
     fun saveInCache(character: Character){
         this.character[character.id] = character
     }
 
-    fun saveEpisodesInCache(episodes: List<Episode>){
-        this.episodes.clear()
-        this.episodes.addAll(episodes)
-    }
+    fun saveEpisodesInCache(episodes: List<Episode>, page: Int) = this.episodes[page]?.addAll(episodes)
 
     fun isCharactersInCache(page: Int) : Boolean = this.characters.containsKey(page)
 
     fun isCharacterInCache(id: Long) : Boolean = this.character.containsKey(id)
 
-    fun isEpisodesInCache() : Boolean = this.episodes.isNotEmpty()
+    fun isEpisodesInCache(page: Int) : Boolean = this.episodes.containsKey(page)
 
 }

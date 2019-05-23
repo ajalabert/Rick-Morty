@@ -8,14 +8,18 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
+import androidx.recyclerview.widget.RecyclerView
 import com.ynov.kotlin.rickmorty.R
-import com.ynov.kotlin.rickmorty.presentation.DetailActivity
+import com.ynov.kotlin.rickmorty.extension.showSnackBar
 import com.ynov.kotlin.rickmorty.presentation.list.viewmodel.EpisodeListViewModel
 import com.ynov.kotlin.rickmorty.presentation.list.viewmodel.adapter.EpisodeListAdapter
 import kotlinx.android.synthetic.main.fragment_list.*
 
 class EpisodesFragment : Fragment() {
+
+    private var loading = false
+    private var pageNumber = 1
+
     private lateinit var episodeListAdapter: EpisodeListAdapter
     private lateinit var viewModel: EpisodeListViewModel
 
@@ -30,6 +34,20 @@ class EpisodesFragment : Fragment() {
         fragment_list_recyclerview.layoutManager = LinearLayoutManager(context)
         fragment_list_recyclerview.adapter = episodeListAdapter
 
+        fragment_list_recyclerview.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val linearLayoutManager = recyclerView.layoutManager as LinearLayoutManager?
+
+                if(!loading && linearLayoutManager!!.itemCount <= linearLayoutManager.findLastVisibleItemPosition() + 2){
+                    loading = true
+                    pageNumber++
+                    viewModel.retrieveCharacters(pageNumber)
+                    loading = false
+                }
+            }
+        })
+
         viewModel = ViewModelProviders.of(this).get(EpisodeListViewModel::class.java)
 
         viewModel.episodesLiveData.observe(this, Observer {
@@ -37,7 +55,9 @@ class EpisodesFragment : Fragment() {
         })
 
         viewModel.errorLiveData.observe(this, Observer {
-            getView()?.let { view -> Snackbar.make(view, it.message.toString(), Snackbar.LENGTH_LONG).show() }
+            getView()?.showSnackBar(it.message.toString())
         })
+
+        viewModel.retrieveCharacters(pageNumber)
     }
 }

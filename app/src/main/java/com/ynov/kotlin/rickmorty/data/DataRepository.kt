@@ -8,12 +8,12 @@ import com.ynov.kotlin.rickmorty.data.entity.remote.Episode
 
 class DataRepository(private val apiManager: ApiManager, private val cacheManager: CacheManager) : IDataRepository {
 
-    override fun retrieveEpisodes(): Single<List<EpisodeModel>> = Single.defer{
-        val episodes: Single<List<Episode>> = if(cacheManager.isEpisodesInCache()){
-            cacheManager.retrieveEpisodes()
+    override fun retrieveEpisodes(page: Int): Single<List<EpisodeModel>> = Single.defer{
+        val episodes: Single<List<Episode>> = if(cacheManager.isEpisodesInCache(page)){
+            cacheManager.retrieveEpisodes(page)
         } else {
-            apiManager.retrieveEpisodes().doAfterSuccess {
-                cacheManager.saveEpisodesInCache(it)
+            apiManager.retrieveEpisodes(page).doAfterSuccess {
+                cacheManager.saveEpisodesInCache(it, page)
             }
         }
         episodes.map { it.map { episode -> episode.toModel() } }

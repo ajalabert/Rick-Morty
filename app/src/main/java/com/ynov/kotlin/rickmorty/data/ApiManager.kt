@@ -28,14 +28,14 @@ class ApiManager : IManager {
         fun retrieveCharacter(@Path("id") id: Long): Single<Character>
 
         @GET("api/episode")
-        fun retrieveEpisodes(): Single<EpisodesResult>
+        fun retrieveEpisodes(@Query("page") page: Int): Single<EpisodesResult>
     }
 
     override fun retrieveCharacters(page: Int): Single<List<Character>> = service.retrieveCharacters(page).map{ it.results }
 
     override fun retrieveCharacter(id: Long): Single<Character> = service.retrieveCharacter(id)
 
-    override fun retrieveEpisodes(): Single<List<Episode>> = service.retrieveEpisodes().map{ it.results }
+    override fun retrieveEpisodes(page: Int): Single<List<Episode>> = service.retrieveEpisodes(page).map{ it.results }
 
     init {
         service = Retrofit.Builder()
