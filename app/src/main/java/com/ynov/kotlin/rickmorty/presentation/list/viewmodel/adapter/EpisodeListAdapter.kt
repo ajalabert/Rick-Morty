@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.view_episode_list_item.view.*
 class EpisodeListAdapter : RecyclerView.Adapter<EpisodeListAdapter.ViewHolder>() {
 
     private var episodes: MutableList<Episode> = mutableListOf()
-    var onItemClick: ((Episode) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -36,14 +35,8 @@ class EpisodeListAdapter : RecyclerView.Adapter<EpisodeListAdapter.ViewHolder>()
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        init {
-            itemView.setOnClickListener {
-                this@EpisodeListAdapter.onItemClick?.invoke(episodes[adapterPosition])
-            }
-        }
-
         fun bind(episode: Episode) {
-            itemView.view_episode_list_item_name.text = episode.name
+            itemView.view_episode_list_item_name.text = "${episode.episode} - ${episode.name}"
         }
     }
 }

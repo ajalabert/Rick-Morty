@@ -30,10 +30,6 @@ class EpisodesFragment : Fragment() {
         fragment_list_recyclerview.layoutManager = LinearLayoutManager(context)
         fragment_list_recyclerview.adapter = episodeListAdapter
 
-        episodeListAdapter.onItemClick = {
-            startActivity(context?.let { context -> DetailActivity.newIntent(context, it.id) })
-        }
-
         viewModel = ViewModelProviders.of(this).get(EpisodeListViewModel::class.java)
 
         viewModel.episodesLiveData.observe(this, Observer {
