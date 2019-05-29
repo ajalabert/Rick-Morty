@@ -16,6 +16,7 @@ class EpisodeListViewModel : ViewModel() {
     var episodesLiveData: MutableLiveData<List<Episode>> = MutableLiveData()
     var errorLiveData: MutableLiveData<Throwable> = MutableLiveData()
 
+    // TODO le but de faire un compositeDisposable c'est de le clear() dans un override de onCleared()
     private var compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     fun retrieveEpisodes(page: Int){

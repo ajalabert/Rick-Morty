@@ -11,6 +11,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    // TODO attention c'est très lourd pour la RAM de créer des fragments comme ça dès le démarrage de l'activity
+    //  de plus quand les fragments sont détruits par le système, vous allez avoir des problèmes avec ces valeurs
+    //  le mieux est de les créer dès qu'on veut les afficher dans les transactions du fragmentManager
+    //  et de ne JAMAIS les garder en instance de classe.
+    //  Si vous avez fait ça pour garder l'état des fragments, le viewmodel de chaque fragment est justement fait pour ça,
+    //  mais en les gardant en instance quelque part et en les réinjectant dans les fragments dès qu'on les recréer.
     private val listFragment = CharactersFragment()
     private val episodesFragment = EpisodesFragment()
 

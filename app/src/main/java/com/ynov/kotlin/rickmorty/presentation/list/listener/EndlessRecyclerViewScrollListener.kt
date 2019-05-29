@@ -3,6 +3,7 @@ package com.ynov.kotlin.rickmorty.presentation.list.listener
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
 
+// je rajoute 1 point à la note juste pour la beauté d'avoir fait cette classe
 class EndlessRecyclerViewScrollListener(private val mLayoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
 
     private var visibleThreshold = 5
@@ -32,6 +33,7 @@ class EndlessRecyclerViewScrollListener(private val mLayoutManager: LinearLayout
 
         if (!loading && lastVisibleItemPosition + visibleThreshold >= totalItemCount) {
             currentPage++
+            // TODO dangereux d'utiliser !! ici, il faut éviter ça au maximum, un bon code kotlin ne contient aucun !!
             onLoadMore!!.invoke(currentPage, totalItemCount, view)
             loading = true
         }
