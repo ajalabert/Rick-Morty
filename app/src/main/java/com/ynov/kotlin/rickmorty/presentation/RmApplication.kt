@@ -21,6 +21,7 @@ class RmApplication : Application() {
     }
 
     private fun initInjection() {
+        // TODO attention aux var qui peuvent être en val
         var apiManager = ApiManager()
         var cacheManager = CacheManager()
         dataRepository = DataRepository(apiManager, cacheManager)

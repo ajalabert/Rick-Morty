@@ -51,6 +51,9 @@ class EpisodesFragment : Fragment() {
             getView()?.showSnackBar(it.message.toString())
         })
 
+
+        // TODO vous auriez pu mettre cet appel dans le init {} du viewmodel, ça permet de lancer l'appel au repository
+        //  pendant que le fragment se construit en asynchrone
         viewModel.retrieveEpisodes(1)
     }
 }

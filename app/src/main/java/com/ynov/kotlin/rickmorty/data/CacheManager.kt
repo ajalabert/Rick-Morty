@@ -6,6 +6,7 @@ import io.reactivex.Single
 
 class CacheManager : IManager {
 
+    // TODO on préfère mettre l'interface Map<> en type de variable et utiliser emptyMap() pour initialiser une hashmap vide
     private var episodes: HashMap<Int, MutableList<Episode>> = hashMapOf()
     private var characters: HashMap<Int, MutableList<Character>> = hashMapOf()
     private var character: HashMap<Int, Character> = hashMapOf()
